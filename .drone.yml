@@ -1,0 +1,26 @@
+kind: pipeline
+type: docker
+name: build
+
+steps:
+- name: build 
+  image: busybox:latest 
+  commands:
+  - sleep 1
+
+---
+kind: pipeline
+type: docker
+name: deploy
+
+concurrency:
+  limit: 1
+
+steps:
+- name: run
+  image: busybox:latest 
+  commands:
+  - sleep 120 
+
+depends_on:
+  - build
